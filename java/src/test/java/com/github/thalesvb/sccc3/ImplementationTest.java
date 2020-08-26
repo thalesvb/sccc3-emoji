@@ -1,6 +1,7 @@
 package com.github.thalesvb.sccc3;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,6 +14,9 @@ public abstract class ImplementationTest {
 
     protected ICommunityChallenge3 cut;
 
+    private static final String twoSeparatedEmojis = "👩💻";
+    private static final String oneEmojiWithZwj    = "👩‍💻";
+
     @BeforeEach
     /**
      * Instantiate related implementation to check.
@@ -23,13 +27,15 @@ public abstract class ImplementationTest {
      */
     @Test
     final void testAddJoiner() {
-        assertEquals("👩‍💻", cut.addJoiner("👩💻"));
+        assertEquals(oneEmojiWithZwj, cut.addJoiner(twoSeparatedEmojis));
+        assertNotEquals(twoSeparatedEmojis, cut.addJoiner(twoSeparatedEmojis));
     }
     /**
      * Validate RemoveJoiner implementation based on Challenge example.
      */
     @Test
     final void testRemoveJoiner() {
-        assertEquals("👩💻", cut.removeJoiner("👩‍💻"));
+        assertEquals(twoSeparatedEmojis, cut.removeJoiner(oneEmojiWithZwj));
+        assertNotEquals(oneEmojiWithZwj, cut.removeJoiner(oneEmojiWithZwj));
     }
 }
